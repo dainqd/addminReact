@@ -49,7 +49,7 @@ function List() {
         },
         {
             title: 'BirthDay',
-            dataIndex: 'birthDay',
+            dataIndex: 'birthday',
         },
         {
             title: 'Gender',
@@ -84,13 +84,18 @@ function List() {
 
     const getListAccount = async () => {
         await accountService.listAccount()
-            .then((res) => {
-                console.log("data", res.data)
-                setData(res.data)
-                setLoading(false)
+            .then((res) =>{
+                if (res.status === 200){
+                    console.log("data", res.data)
+                    setData(res.data)
+                    setLoading(false)
+                } else {
+                    alert('Error')
+                    setLoading(false)
+                }
             })
             .catch((err) => {
-                setLoading(true)
+                setLoading(false)
                 console.log(err)
             })
     }

@@ -10,13 +10,14 @@ function Login() {
 
     const onFinish = async (values) => {
         let data = {
-            email: values.email,
+            username: values.username,
             password: values.password
         }
         await accountService.loginAccount(data)
             .then((res) => {
                 console.log("login", res.data)
-                sessionStorage.setItem("accessToken", res.data.accessToken);
+                sessionStorage.setItem("accessToken", res.data.token);
+                sessionStorage.setItem("id", res.data.id);
                 sessionStorage.setItem("username", res.data.username);
                 message.success(`Welcome ${res.data.username} !`)
                 navigate("/")
@@ -53,17 +54,13 @@ function Login() {
                                 >
                                     <h3>SIGN IN</h3>
                                     <div>
-                                        <label>Email</label>
+                                        <label>Username</label>
                                         <Form.Item
-                                            name="email"
+                                            name="username"
                                             rules={[
                                                 {
                                                     required: true,
-                                                    message: 'Please input your E-mail!',
-                                                },
-                                                {
-                                                    type: 'email',
-                                                    message: "Invalid E-mail!"
+                                                    message: 'Please input your username!',
                                                 }
                                             ]}
                                             hasFeedback

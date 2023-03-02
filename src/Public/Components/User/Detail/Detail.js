@@ -43,7 +43,7 @@ function Detail() {
       .then((res) => {
         console.log("data", res.data)
         message.success("Update success")
-        navigate("/admin/account/list")
+        navigate("/account/list")
       })
       .catch((err) => {
         console.log(err)

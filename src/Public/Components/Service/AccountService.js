@@ -2,12 +2,12 @@ import { BASE_URL_SERVER } from "../config/server";
 import axios from "axios";
 
 const API_ENDPOINT = {
-    LOGIN_ACCOUNT: "/api/v1/account/login",
-    REGISTER_ACCOUNT: "/api/v1/account/register",
-    LIST_ACCOUNT: "/api/v1/account/list",
-    DELETE_ACCOUNT: "/api/v1/account/",
-    UPDATE_ACCOUNT: "/api/v1/account/",
-    DETAIL_ACCOUNT: "/api/v1/account/",
+    LOGIN_ACCOUNT: "/api/auth/login",
+    REGISTER_ACCOUNT: "/api/auth/register",
+    LIST_ACCOUNT: "/api/user/list",
+    DETAIL_ACCOUNT: "/api/user/detail/",
+    UPDATE_ACCOUNT: "/api/user/update-info/",
+    DELETE_ACCOUNT: "/api/user/detail/",
 }
 class AccountService {
 
@@ -20,7 +20,13 @@ class AccountService {
     }
 
     listAccount = () => {
-        return axios.get(BASE_URL_SERVER + API_ENDPOINT.LIST_ACCOUNT);
+        const config = {
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem("accessToken")}`
+            }
+        };
+        return axios.get(BASE_URL_SERVER + API_ENDPOINT.LIST_ACCOUNT, config);
     }
 
     deleteAccount = (id) => {
@@ -28,11 +34,24 @@ class AccountService {
     }
 
     updateAccount = (id, data) => {
-        return axios.put(BASE_URL_SERVER + API_ENDPOINT.UPDATE_ACCOUNT + id, data);
+        const config = {
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem("accessToken")}`
+            }
+        };
+        console.log(config)
+        return axios.put(BASE_URL_SERVER + API_ENDPOINT.UPDATE_ACCOUNT + id, data, config);
     }
 
     detailAccount = (id) => {
-        return axios.get(BASE_URL_SERVER + API_ENDPOINT.DETAIL_ACCOUNT + id)
+        const config = {
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem("accessToken")}`
+            }
+        };
+        return axios.get(BASE_URL_SERVER + API_ENDPOINT.DETAIL_ACCOUNT + id, config)
     }
 }
 const accountService = new AccountService();
